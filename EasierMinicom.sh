@@ -1,6 +1,6 @@
 com() {
-	ports_USB=$(ls /dev/ttyUSB*)
-	ports_ACM=$(ls /dev/ttyACM*)  #arduino
+	ports_USB=$(ls /dev/ttyUSB* 2>/dev/null)
+	ports_ACM=$(ls /dev/ttyACM* 2>/dev/null)  #arduino
 	ports="$ports_USB $ports_ACM"
 	datename=$(date +%Y%m%d-%H%M%S)
 	select port in $ports;do

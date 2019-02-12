@@ -30,14 +30,23 @@ com() {
 		done
 	fi
 
-	out="/tmp/$dev-$datename.log"
+	out="/tmp/$(basename ${dev}).$datename.log"
 	keep_dir="${HOME}/minicom_keep"
 
 	minicom -D "/dev/$dev" -C "${out}" "$@"
 
 	[ -f "${out}" ] && {
 		echo log : "${out}"
-		read -p "Keep it? [Y|n]: " keep;
-		[ "${keep}" = 'Y' -o "${keep}" = 'y' ] && { mkdir -p "$keep_dir"; cp "${out}" "$keep_dir"; echo "saved in $keep_dir"; }
+		read -p "Keep it? [y|N]: " keep;
+
+		[ "${keep}" = 'Y' -o "${keep}" = 'y' ] && {
+			read -p "Enter file name > " keep_file_name
+
+			[ x"$keep_file_name" = x"" ] && keep_file_name=$(basename "${out}")
+
+			mkdir -p "$keep_dir"
+			cp "${out}" "${keep_dir}/$keep_file_name)"
+			echo "saved in $keep_dir/$keep_file_name"
+		}
 	}
 }

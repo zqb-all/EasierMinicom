@@ -45,8 +45,11 @@ com() {
 			[ x"$keep_file_name" = x"" ] && keep_file_name=$(basename "${out}")
 
 			mkdir -p "$keep_dir"
-			cp "${out}" "${keep_dir}/$keep_file_name)"
+			cp "${out}" "${keep_dir}/$keep_file_name"
 			echo "saved in $keep_dir/$keep_file_name"
 		}
 	}
+	read -p "Vim it? [y|N]: " edit_vim;
+
+	[ "${edit_vim}" = 'Y' -o "${edit_vim}" = 'y' ] && vim "${out}"
 }
